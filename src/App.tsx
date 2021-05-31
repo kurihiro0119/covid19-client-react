@@ -1,10 +1,14 @@
 import React from "react";
 
 import "./App.css";
-import DashBoard from "./features/covid/DashBoard/DashBoard";
+import DashBoard from "./DashBoard/DashBoard";
 
 function App() {
-  return <DashBoard />;
+  return (
+    <div>
+      <DashBoard />
+    </div>
+  )
 }
 
 export default App;

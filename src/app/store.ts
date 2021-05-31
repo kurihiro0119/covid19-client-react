@@ -1,9 +1,9 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import {configureStore, ThunkAction, Action} from "@reduxjs/toolkit";
+import covidReducer from "../covidSlice";
 
-import covidReducer from "../features/covid/covidSlice";
 export const store = configureStore({
-  reducer: {
-    covid: covidReducer,
+  reducer:{
+    covid:covidReducer,
   },
 });
 

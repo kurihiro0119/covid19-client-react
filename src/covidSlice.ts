@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, createAction } from '@reduxjs/toolkit';
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios"
 import { RootState } from "./app/store";
+import { RSA_X931_PADDING } from "constants";
 
 const apiUrl = "https://covid19.mathdro.id/api";
 
@@ -22,7 +23,16 @@ type CovidState = {
     recoverd: number;
   }[];
   lastUpdate: string;
+  today: Date;
+  todayConfirmed: number;
+  tomorrowPredictConfirmed: number;
 };
+
+function getTodayString():string {
+  const today:Date = new Date()
+  const todayString:string = today.toDateString();
+  return todayString;
+}
 
 const initialState: CovidState = {
   dailyData: [
@@ -57,7 +67,10 @@ const initialState: CovidState = {
       recoverd: 0,
     },    
   ],
-  lastUpdate: "2020-07-02T02:33:53.000Z",
+  today: new Date(),
+  lastUpdate: getTodayString(),
+  todayConfirmed: 100,
+  tomorrowPredictConfirmed: 120,
 }
 
 export const fetchAsyncGetPastData = createAsyncThunk("covid/get", async() =>{
@@ -73,7 +86,12 @@ export const fetchAsyncGetPredictData = createAsyncThunk("predict/get", async() 
 const covidSlice = createSlice({
   name: "covid",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    updateDateReducer: (state) => {
+      console.log("dispatch");
+      state.lastUpdate = state.today.toDateString();
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAsyncGetPastData.fulfilled, (state, action) => {
       return {
@@ -90,6 +108,10 @@ const covidSlice = createSlice({
   },
 });
 
+export const selecttoday = (state: RootState) => state.covid.today;
+export const selecttodayConfirmed = (state: RootState) => state.covid.todayConfirmed;
+export const selecttomorrowPredictConfirmed = (state: RootState) => state.covid.tomorrowPredictConfirmed;
 export const selectDailyData = (state: RootState) => state.covid.dailyData;
 export const selectLastDay = (state: RootState) => state.covid.lastUpdate;
+export const {updateDateReducer} = covidSlice.actions;
 export default covidSlice.reducer;

@@ -13,7 +13,8 @@ import {
 } from "@material-ui/core";
 
 import Chart from "../Chart/Chart";
-import {fetchAsyncGetPastData, fetchAsyncGetPredictData , selectDailyData, selectLastDay} from "../covidSlice"
+import Cards from "../Card/Cards";
+import {fetchAsyncGetPastData, fetchAsyncGetPredictData , selectDailyData, selectLastDay, updateDateReducer} from "../covidSlice"
 
 const useStyles = makeStyles((theme) => ({
     title:{
@@ -32,12 +33,13 @@ const DashBoard: React.FC = () => {
     const lastUpdate = useSelector(selectLastDay);
     const predictInfectData:number = 100;
     const predictDeathData:number = 10;
-    const predictDeadData:number = 10;
-
+    const predictDeadData:number = 10;    
+    dispatch(updateDateReducer);
     // useEffect(()=> {
-    //     dispatch(fetchAsyncGetPastData());
-    //     dispatch(fetchAsyncGetPredictData());
+    //     dispatch(updateDateReducer);
     // }, [dispatch]);
+    // dispatch(fetchAsyncGetPastData());
+    // dispatch(fetchAsyncGetPredictData());
 
     return (
         <div>
@@ -59,7 +61,7 @@ const DashBoard: React.FC = () => {
                         <Chart />
                     </Grid>
                     <Grid item xs={12} md={5}>
-                        <h3>Predicted:{predictInfectData}</h3>
+                        <Cards />
                     </Grid>
                 </Grid>
             </Container>

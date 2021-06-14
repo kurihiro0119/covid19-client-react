@@ -34,8 +34,8 @@ const initialState: CovidState = {
   dailyData: [],
   today: new Date(),
   lastUpdate: getTodayString(),
-  todayConfirmed: 100,
-  tomorrowPredictConfirmed: 120,
+  todayConfirmed: 0,
+  tomorrowPredictConfirmed: 0,
 }
 
 export const fetchAsyncGetPastData = createAsyncThunk("/covid/get", async() =>{

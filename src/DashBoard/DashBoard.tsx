@@ -28,18 +28,14 @@ const useStyles = makeStyles((theme) => ({
 
 const DashBoard: React.FC = () => {
     const classes = useStyles();
-    const  dispatch = useDispatch();
-    const data = useSelector(selectDailyData);
+    const dispatch = useDispatch();
     const lastUpdate = useSelector(selectLastDay);
-    const predictInfectData:number = 100;
-    const predictDeathData:number = 10;
-    const predictDeadData:number = 10;    
-    dispatch(updateDateReducer);
-    // useEffect(()=> {
-    //     dispatch(updateDateReducer);
-    // }, [dispatch]);
-    // dispatch(fetchAsyncGetPastData());
-    // dispatch(fetchAsyncGetPredictData());
+
+    useEffect(()=> {
+        // dispatch(updateDateReducer);
+        dispatch(fetchAsyncGetPastData());
+        dispatch(fetchAsyncGetPredictData());
+    }, [dispatch]);
 
     return (
         <div>
